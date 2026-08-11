@@ -21,7 +21,7 @@ ezijrzij
 ## gael
 
 ![Test Image](/images/notes/image1.JPG)
-
+<img src="{{ '/images/trail.jpg' | url }}" alt="Trail">
 
 ### gael
 hjhrhrhrhrhrhrhrhrh

@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href={{ page.url | url | absoluteUrl(site.url) }}>
-    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Feed">
+    <link rel="alternate"
+      type="application/rss+xml"
+      href="{{ '/feed.xml' | url }}"
+      title="Feed">
 
     {% bundledcss %}
 
@@ -20,7 +23,7 @@
       {% endif %}
     </title>
 
-    <link rel="icon" type= “image/x-icon” href="/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{ '/images/favicon.ico' | url }}">
 
     <meta property="og:title" content="{{  title or site.name | escape }}">
     <meta property="og:site_name" content="{{ site.name }}"/>

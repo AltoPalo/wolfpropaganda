@@ -16,8 +16,8 @@ This blog is a working log ; thoughts, progress, mistakes, and course correction
 
 My goal is simple: do useful work, stay honest, and one day find myself in the Alaskan wilderness with huskies.
 
-<img class="about-content-image" src="/images/about/goal.jpg" alt="Me">
-<img class="about-content-image" src="/images/about/goal2.jpg" alt="Me">
-<img class="about-content-image" src="/images/about/goal3.jpg" alt="Me">
+<img class="about-content-image" src="{{ '/images/about/goal.jpg' | url }}" alt="Me">
+<img class="about-content-image" src="{{ '/images/about/goal2.jpg' | url }}" alt="Me">
+<img class="about-content-image" src="{{ '/images/about/goal3.jpg' | url }}" alt="Me">
 
 
