@@ -54,17 +54,20 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addShortcode('bundledcss', function () {
-    if (!manifest['main.css']) return '';
+  if (!manifest['main.css']) return '';
 
-    return `<link href="${manifest['main.css']}" rel="stylesheet" />`;
-  });
+  const prefix = isProd ? '/wolfpropaganda' : '';
 
-  eleventyConfig.addShortcode('bundledjs', function () {
-    if (!manifest['main.js']) return '';
+  return `<link href="${prefix}${manifest['main.css']}" rel="stylesheet" />`;
+});
 
-    return `<script src="${manifest['main.js']}"></script>`;
-  });
+eleventyConfig.addShortcode('bundledjs', function () {
+  if (!manifest['main.js']) return '';
 
+  const prefix = isProd ? '/wolfpropaganda' : '';
+
+  return `<script src="${prefix}${manifest['main.js']}"></script>`;
+});
   eleventyConfig.addFilter('excerpt', (post) => {
     const content = post.replace(/(<([^>]+)>)/gi, '');
     return content.substr(0, content.lastIndexOf(' ', 200)) + '...';
