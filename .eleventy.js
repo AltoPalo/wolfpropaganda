@@ -131,7 +131,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/music");
 
 return {
-    pathPrefix: isProd ? '/wolfpropaganda/' : '/',
+    pathPrefix: isProd ? '/' : '/',
     dir: {
       input: 'src',
       output: 'public',
