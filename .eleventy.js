@@ -24,8 +24,9 @@ const manifest = isDev
   : JSON.parse(fs.readFileSync(manifestPath, { encoding: 'utf8' }));
 
 module.exports = function (eleventyConfig) {
-  // ← AJOUT IMPORTANT
+  // Plugin obligatoire pour le pathPrefix
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
+
   eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
@@ -44,15 +45,13 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.setBrowserSyncConfig({ files: [manifestPath] });
 
   eleventyConfig.addShortcode('bundledcss', function () {
-    return manifest['main.css']
-      ? `<link href="${manifest['main.css']}" rel="stylesheet" />`
-      : '';
+    if (!manifest['main.css']) return '';
+    return `<link href="${manifest['main.css']}" rel="stylesheet" />`;
   });
 
   eleventyConfig.addShortcode('bundledjs', function () {
-    return manifest['main.js']
-      ? `<script src="${manifest['main.js']}"></script>`
-      : '';
+    if (!manifest['main.js']) return '';
+    return `<script src="${manifest['main.js']}"></script>`;
   });
 
   // ... tous tes filters restent identiques ...
@@ -131,7 +130,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy("src/music");
 
-  return {
+return {
+    pathPrefix: isProd ? '/wolfpropaganda/' : '/',
     dir: {
       input: 'src',
       output: 'public',
