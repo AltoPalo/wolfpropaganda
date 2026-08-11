@@ -21,7 +21,7 @@ ezijrzij
 ## gael
 
 ![Test Image](/images/notes/image1.JPG)
-<img src="{{ '/images/trail.jpg' | url }}" alt="Trail">
+<img src="{{ '/images/notes/image1.jpg' | url }}" alt="Trail">
 
 ### gael
 hjhrhrhrhrhrhrhrhrh
@@ -29,5 +29,5 @@ hjhrhrhrhrhrhrhrhrh
 ![Test Image](/images/about/goal.jpg)
 
 <audio controls>
-  <source src="/music/notes/skeleton.mp3" type="audio/mpeg">
+  <source src="{{ '/music/notes/skeleton.mp3' | url }}" type="audio/mpeg">
 </audio>
