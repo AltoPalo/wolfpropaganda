@@ -1,0 +1,3 @@
+User-agent: *
+Sitemap: https://placeholder.app/sitemap.xml
+flag:{rob_auth_rox}
