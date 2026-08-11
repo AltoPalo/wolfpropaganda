@@ -75,7 +75,7 @@ a {
 }
 
 a:hover {
-  color: var(--accent);
+  color: rgb(16, 138, 0);
 }
 
 ol {
@@ -231,3 +231,4 @@ mark {
   white-space: nowrap;
   width: 1px;
 }
+

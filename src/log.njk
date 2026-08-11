@@ -1,0 +1,26 @@
+---
+title: Log
+layout: base
+permalink: /log/
+eleventyExcludeFromCollections: false
+---
+
+<div class="log">
+  <h1>Outpost</h1>
+  <p>A running journal of thoughts, progress, and observations — follow along the trail.</p>
+
+  {% if collections.posts | length %}
+    <ul class="log-list">
+      {% for post in collections.posts | reverse %}
+        <li>
+          <a href="{{ post.url | url }}">
+            <span class="log-date">{{ post.date | readableDate }}</span>
+            <span class="log-title">{{ post.data.title }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No entries yet. The trail is quiet…</p>
+  {% endif %}
+</div>

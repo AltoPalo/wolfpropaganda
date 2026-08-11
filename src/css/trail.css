@@ -1,0 +1,46 @@
+.trail {
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: #1c1c1c;
+}
+
+.trail h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #0b3d2e;
+  padding-bottom: 0.5rem;
+}
+
+.trail p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.trail-list {
+  list-style: none;
+  padding: 0;
+}
+
+.trail-list li {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+.trail-list li.done {
+  text-decoration: line-through;
+  color: #555;
+}
+
+.trail em {
+  display: block;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #612f11;
+  text-align: center;
+}

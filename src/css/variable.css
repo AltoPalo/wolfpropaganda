@@ -1,8 +1,8 @@
 :root {
-  --accent: #0074d9;
-  --background: #fffffe;
-  --color: rgb(41, 41, 41);
-  --color-80: rgba(41, 41, 41, .8);
-  --color-30: rgba(41, 41, 41, .3);
-  --color-10: rgba(41, 41, 41, .1);
+  --background: #F5F0E8;      /* parchemin chaud */
+  --color: #1A1410;            /* encre foncée */
+  --accent: #C0622A;          /* cuivre/rouille */
+  --color-80: rgba(26,20,16,.8);
+  --color-30: rgba(26,20,16,.3);
+  --color-10: rgba(26,20,16,.1);
 }

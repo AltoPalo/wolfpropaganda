@@ -2,11 +2,12 @@ const { DateTime } = require('luxon');
 const readingTime = require('eleventy-plugin-reading-time');
 const pluginRss = require('@11ty/eleventy-plugin-rss');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 const fs = require('fs');
 const path = require('path');
 
 const isDev = process.env.ELEVENTY_ENV === 'development';
-const isProd = process.env.ELEVENTY_ENV === 'production'
+const isProd = process.env.ELEVENTY_ENV === 'production';
 
 const manifestPath = path.resolve(
   __dirname,
@@ -23,6 +24,8 @@ const manifest = isDev
   : JSON.parse(fs.readFileSync(manifestPath, { encoding: 'utf8' }));
 
 module.exports = function (eleventyConfig) {
+  // ← AJOUT IMPORTANT
+  eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
   eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
@@ -52,6 +55,8 @@ module.exports = function (eleventyConfig) {
       : '';
   });
 
+  // ... tous tes filters restent identiques ...
+
   eleventyConfig.addFilter('excerpt', (post) => {
     const content = post.replace(/(<([^>]+)>)/gi, '');
     return content.substr(0, content.lastIndexOf(' ', 200)) + '...';
@@ -75,7 +80,6 @@ module.exports = function (eleventyConfig) {
     if (n < 0) {
       return array.slice(n);
     }
-
     return array.slice(0, n);
   });
 
@@ -91,9 +95,9 @@ module.exports = function (eleventyConfig) {
             case 'nav':
             case 'post':
             case 'posts':
+            case 'notes':
               return false;
           }
-
           return true;
         });
 
@@ -116,6 +120,16 @@ module.exports = function (eleventyConfig) {
         return !generalTags.includes(tag);
       });
   });
+
+  // Collection for all notes
+  eleventyConfig.addCollection("notes", function(collectionApi) {
+    return collectionApi.getAll().filter(item => {
+      return item.data.tags && item.data.tags.includes("notes");
+    });
+  });
+
+  eleventyConfig.addPassthroughCopy("src/images");
+  eleventyConfig.addPassthroughCopy("src/music");
 
   return {
     dir: {

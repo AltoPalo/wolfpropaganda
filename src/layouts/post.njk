@@ -27,21 +27,21 @@ layout: base.njk
     </div>
 
     <nav class="post__pagination">
-      {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
-      {%- if nextPost %}
+      {%- set nextNote = collections.notes | getNextCollectionItem(page) %}
+      {%- if nextNote %}
 
-        <a href="{{ nextPost.url | url }}">
+        <a href="{{ nextNote.url | url }}">
           <span>←</span>
-          <span>{{ nextPost.data.title }}</span>
+          <span>{{ nextNote.data.title }}</span>
         </a>
 
       {% endif %}
 
-      {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
-      {%- if previousPost %}
+      {%- set previousNote = collections.notes | getPreviousCollectionItem(page) %}
+      {%- if previousNote %}
 
-        <a href="{{ previousPost.url | url }}">
-          <span>{{ previousPost.data.title }}</span>
+        <a href="{{ previousNote.url | url }}">
+          <span>{{ previousNote.data.title }}</span>
           <span>→</span>
         </a>
 

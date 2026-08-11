@@ -8,6 +8,8 @@
 @import 'footer.css';
 @import 'post.css';
 @import 'about.css';
+@import 'trail.css';
+@import 'log.css';
 
 .layout-wrapper {
   display: grid;
@@ -26,3 +28,5 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+
