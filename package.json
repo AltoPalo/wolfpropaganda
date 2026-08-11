@@ -38,7 +38,7 @@
     "dev:site": "env ELEVENTY_ENV=development eleventy --serve",
     "build:assets": "webpack --mode production",
     "build:site": "env ELEVENTY_ENV=production eleventy",
-    "build:site:ghpages": "env ELEVENTY_ENV=production eleventy --pathprefix=/wolfpropaganda/",
+    "build:site:ghpages": "env ELEVENTY_ENV=production eleventy",
     "clean": "rm -rf ./public"
   },
   "dependencies": {
