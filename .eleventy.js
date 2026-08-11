@@ -2,12 +2,14 @@ const { DateTime } = require('luxon');
 const readingTime = require('eleventy-plugin-reading-time');
 const pluginRss = require('@11ty/eleventy-plugin-rss');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
-const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 const fs = require('fs');
 const path = require('path');
 
 const isDev = process.env.ELEVENTY_ENV === 'development';
 const isProd = process.env.ELEVENTY_ENV === 'production';
+
+console.log('ELEVENTY_ENV =', process.env.ELEVENTY_ENV);
+console.log('isProd =', isProd);
 
 const manifestPath = path.resolve(
   __dirname,
@@ -24,37 +26,44 @@ const manifest = isDev
   : JSON.parse(fs.readFileSync(manifestPath, { encoding: 'utf8' }));
 
 module.exports = function (eleventyConfig) {
-  // Plugin obligatoire pour le pathPrefix
-  eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
-
   eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
 
-  // setup mermaid markdown highlighter
   const highlighter = eleventyConfig.markdownHighlighter;
+
   eleventyConfig.addMarkdownHighlighter((str, language) => {
     if (language === 'mermaid') {
       return `<pre class="mermaid">${str}</pre>`;
     }
+
     return highlighter(str, language);
   });
 
   eleventyConfig.setDataDeepMerge(true);
-  eleventyConfig.addPassthroughCopy({ 'src/images': 'images' });
-  eleventyConfig.setBrowserSyncConfig({ files: [manifestPath] });
+
+  eleventyConfig.addPassthroughCopy({
+    'src/images': 'images',
+  });
+
+  eleventyConfig.addPassthroughCopy('src/images');
+  eleventyConfig.addPassthroughCopy('src/music');
+
+  eleventyConfig.setBrowserSyncConfig({
+    files: [manifestPath],
+  });
 
   eleventyConfig.addShortcode('bundledcss', function () {
     if (!manifest['main.css']) return '';
+
     return `<link href="${manifest['main.css']}" rel="stylesheet" />`;
   });
 
   eleventyConfig.addShortcode('bundledjs', function () {
     if (!manifest['main.js']) return '';
+
     return `<script src="${manifest['main.js']}"></script>`;
   });
-
-  // ... tous tes filters restent identiques ...
 
   eleventyConfig.addFilter('excerpt', (post) => {
     const content = post.replace(/(<([^>]+)>)/gi, '');
@@ -68,22 +77,26 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter('htmlDateString', (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat('yyyy-LL-dd');
+    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat(
+      'yyyy-LL-dd'
+    );
   });
 
   eleventyConfig.addFilter('dateToIso', (dateString) => {
-    return new Date(dateString).toISOString()
+    return new Date(dateString).toISOString();
   });
 
   eleventyConfig.addFilter('head', (array, n) => {
     if (n < 0) {
       return array.slice(n);
     }
+
     return array.slice(0, n);
   });
 
   eleventyConfig.addCollection('tagList', function (collection) {
     let tagSet = new Set();
+
     collection.getAll().forEach(function (item) {
       if ('tags' in item.data) {
         let tags = item.data.tags;
@@ -97,6 +110,7 @@ module.exports = function (eleventyConfig) {
             case 'notes':
               return false;
           }
+
           return true;
         });
 
@@ -120,27 +134,27 @@ module.exports = function (eleventyConfig) {
       });
   });
 
-  // Collection for all notes
-  eleventyConfig.addCollection("notes", function(collectionApi) {
-    return collectionApi.getAll().filter(item => {
-      return item.data.tags && item.data.tags.includes("notes");
+  eleventyConfig.addCollection('notes', function (collectionApi) {
+    return collectionApi.getAll().filter((item) => {
+      return item.data.tags && item.data.tags.includes('notes');
     });
   });
 
-  eleventyConfig.addPassthroughCopy("src/images");
-  eleventyConfig.addPassthroughCopy("src/music");
+  return {
+    pathPrefix: isProd ? '/wolfpropaganda/' : '/',
 
-return {
-    pathPrefix: isProd ? '/' : '/',
     dir: {
       input: 'src',
       output: 'public',
       includes: 'includes',
       data: 'data',
-      layouts: 'layouts'
+      layouts: 'layouts',
     },
+
     passthroughFileCopy: true,
+
     templateFormats: ['html', 'njk', 'md'],
+
     htmlTemplateEngine: 'njk',
     markdownTemplateEngine: 'njk',
   };
